@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ClientDAO{
-
     public static ObservableList<Client> getAllClients() throws IOException, SQLException {
         ArrayList<Client> resultat = new ArrayList<>();
         try {
@@ -45,16 +44,16 @@ public class ClientDAO{
         return getClientsList(resultat);
     }
 
-//    public static ObservableList<Client> searchClients() throws SQLException, ClassNotFoundException, IOException {
-//        String selectStmt = "SELECT * FROM clie;";
-//        try {
-//            ResultSet rsClis = DBConnector.dbExecuteQuery(selectStmt);
-//            return getClientsList(rsClis);
-//        } catch (SQLException | IOException e) {
-//            System.out.println("SQL select operation failed!  " + e);
-//            throw e;
-//        }
-//    }
+    public static ObservableList<Client> searchClients() throws SQLException, ClassNotFoundException, IOException {
+        String selectStmt = "SELECT * FROM clie;";
+        try {
+            ResultSet rsClis = DBConnector.dbExecuteQuery(selectStmt);
+            return getClientsList(rsClis);
+        } catch (SQLException | IOException e) {
+            System.out.println("SQL select operation failed!  " + e);
+            throw e;
+        }
+    }
 
     public static ObservableList<Client> getClientsList(ArrayList arrayList) throws SQLException, IOException {
         ObservableList<Client> cliList = FXCollections.observableArrayList(arrayList);
