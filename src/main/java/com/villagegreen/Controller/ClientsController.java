@@ -20,7 +20,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import org.hildan.fxgson.FxGson;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -81,13 +80,13 @@ public class ClientsController {
 
 
     @FXML
-    private void searchClients() throws ClassNotFoundException, SQLException, IOException {
+    private void searchClients() throws ClassNotFoundException, SQLException {
         try {
             detailsBtn.setDisable(true);
             showCommande.setDisable(true);
-            ObservableList<Client> cliData = ClientDAO.getAllClients();
+            ObservableList<Client> cliData = ClientDAO.searchClients();
             populateClients(cliData);
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             System.out.println("Error " + e);
             throw e;
         }
@@ -140,7 +139,7 @@ public class ClientsController {
                 updateCliBtn.setDisable(false);
                 deleteClient(getSelectedRow());
                 clear();
-            } catch (SQLException | ClassNotFoundException | IOException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         });
@@ -177,7 +176,7 @@ public class ClientsController {
     }
 
     @FXML
-    public void deleteClient(Client client) throws SQLException, ClassNotFoundException, NullPointerException, IOException {
+    public void deleteClient(Client client) throws SQLException, ClassNotFoundException, NullPointerException {
         try {
             ClientDAO.deleteCliWithId(client.getId_client());
             resultLabel.setText("Le profil a été supprimé!");
@@ -185,7 +184,7 @@ public class ClientsController {
             searchClients();
             deleteBtn.setDisable(true);
             updateCliBtn.setDisable(true);
-        } catch (SQLException | NullPointerException | IOException e) {
+        } catch (SQLException | NullPointerException e) {
             resultLabel.setText("Suppression du client impossible");
             resultLabel.setTextFill(Paint.valueOf("red"));
             throw e;
@@ -193,14 +192,14 @@ public class ClientsController {
     }
 
     @FXML
-    public void updateNomClient(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException {
+    public void updateNomClient(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
         try {
             ClientDAO.updateNomCli(nomCliText.getText(), prenomCliText.getText(), adresseCliText.getText(), mailCliText.getText(), telCliText.getText(), idCliText.getText(), idVenText.getText());
             resultLabel.setText("Le profil de " + prenomCliText.getText() + " " + nomCliText.getText() + " a été modifié!");
             resultLabel.setTextFill(Paint.valueOf("green"));
             searchClients();
             clear();
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             resultLabel.setText("Mis à jour client impossible");
             resultLabel.setTextFill(Paint.valueOf("red"));
             throw e;
@@ -208,7 +207,7 @@ public class ClientsController {
     }
 
     @FXML
-    public void insertClient() throws SQLException, ClassNotFoundException, IOException {
+    public void insertClient() throws SQLException, ClassNotFoundException {
         try {
             BackgroundFill backgroundFill = new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY);
             Background background = new Background(backgroundFill);
@@ -242,7 +241,7 @@ public class ClientsController {
                     idVenText.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
                 }
             }
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             resultLabel.setText("Insertion du client impossible");
             resultLabel.setTextFill(Paint.valueOf("red"));
             throw e;
@@ -263,8 +262,4 @@ public class ClientsController {
             e.printStackTrace();
         }
     }
-
-
-
-
 }

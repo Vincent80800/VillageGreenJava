@@ -9,7 +9,6 @@ import javafx.collections.ObservableList;
 import org.hildan.fxgson.FxGson;
 
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -20,43 +19,33 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class ClientDAO{
-    public static ObservableList<Client> getAllClients() throws IOException, SQLException {
-        ArrayList<Client> resultat = new ArrayList<>();
-        try {
-            String sURL = "https://dev.amorce.org/vboulard/VillageGreen/index.php/Api/getAllClie/";
 
-            URL api = new URL(sURL);
-            URLConnection request = api.openConnection();
-            request.connect();
-
-            Gson gg = FxGson.coreBuilder().setPrettyPrinting().disableHtmlEscaping().create();
-            JsonParser jp = new JsonParser();
-            JsonArray root = (JsonArray) jp.parse(new InputStreamReader((InputStream) request.getContent()));
-            Client[] liste = gg.fromJson(root, Client[].class);
-
-            resultat.addAll(Arrays.asList(liste));
-        }
-        catch (Exception er) {
-            System.out.println("Un problème est survenue");
-            System.out.println(er.getMessage());
-            throw er;
-        }
-        return getClientsList(resultat);
-    }
-
-    public static ObservableList<Client> searchClients() throws SQLException, ClassNotFoundException, IOException {
+    public static ObservableList<Client> searchClients() throws SQLException, ClassNotFoundException {
         String selectStmt = "SELECT * FROM clie;";
         try {
             ResultSet rsClis = DBConnector.dbExecuteQuery(selectStmt);
             return getClientsList(rsClis);
-        } catch (SQLException | IOException e) {
+        } catch (SQLException e) {
             System.out.println("SQL select operation failed!  " + e);
             throw e;
         }
     }
 
-    public static ObservableList<Client> getClientsList(ArrayList arrayList) throws SQLException, IOException {
-        ObservableList<Client> cliList = FXCollections.observableArrayList(arrayList);
+    public static ObservableList<Client> getClientsList(ResultSet rs) throws SQLException {
+        ObservableList<Client> cliList = FXCollections.observableArrayList();
+        while (rs.next()) {
+            Client cli = new Client();
+
+            cli.setNom_client(rs.getString("cli_nom"));
+            cli.setPrenom_client(rs.getString("cli_pre"));
+            cli.setAdresse_client(rs.getString("cli_adr"));
+            cli.setMail_client(rs.getString("cli_email"));
+            cli.setTel_client(rs.getString("cli_tel"));
+            cli.setId_client(rs.getInt("cli_id"));
+            cli.setId_vendeur(rs.getInt("ven_id"));
+
+            cliList.add(cli);
+        }
         return cliList;
     }
 
