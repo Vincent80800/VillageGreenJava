@@ -80,13 +80,13 @@ public class ClientsController {
 
 
     @FXML
-    private void searchClients() throws ClassNotFoundException, SQLException {
+    private void searchClients() throws ClassNotFoundException, SQLException, IOException {
         try {
             detailsBtn.setDisable(true);
             showCommande.setDisable(true);
-            ObservableList<Client> cliData = ClientDAO.searchClients();
+            ObservableList<Client> cliData = ClientDAO.getAllClients();
             populateClients(cliData);
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             System.out.println("Error " + e);
             throw e;
         }
@@ -139,7 +139,7 @@ public class ClientsController {
                 updateCliBtn.setDisable(false);
                 deleteClient(getSelectedRow());
                 clear();
-            } catch (SQLException | ClassNotFoundException e) {
+            } catch (SQLException | ClassNotFoundException | IOException e) {
                 e.printStackTrace();
             }
         });
@@ -176,7 +176,7 @@ public class ClientsController {
     }
 
     @FXML
-    public void deleteClient(Client client) throws SQLException, ClassNotFoundException, NullPointerException {
+    public void deleteClient(Client client) throws SQLException, ClassNotFoundException, NullPointerException, IOException {
         try {
             ClientDAO.deleteCliWithId(client.getId_client());
             resultLabel.setText("Le profil a été supprimé!");
@@ -184,7 +184,7 @@ public class ClientsController {
             searchClients();
             deleteBtn.setDisable(true);
             updateCliBtn.setDisable(true);
-        } catch (SQLException | NullPointerException e) {
+        } catch (SQLException | NullPointerException | IOException e) {
             resultLabel.setText("Suppression du client impossible");
             resultLabel.setTextFill(Paint.valueOf("red"));
             throw e;
@@ -192,14 +192,14 @@ public class ClientsController {
     }
 
     @FXML
-    public void updateNomClient(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+    public void updateNomClient(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException {
         try {
             ClientDAO.updateNomCli(nomCliText.getText(), prenomCliText.getText(), adresseCliText.getText(), mailCliText.getText(), telCliText.getText(), idCliText.getText(), idVenText.getText());
             resultLabel.setText("Le profil de " + prenomCliText.getText() + " " + nomCliText.getText() + " a été modifié!");
             resultLabel.setTextFill(Paint.valueOf("green"));
             searchClients();
             clear();
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             resultLabel.setText("Mis à jour client impossible");
             resultLabel.setTextFill(Paint.valueOf("red"));
             throw e;
@@ -207,7 +207,7 @@ public class ClientsController {
     }
 
     @FXML
-    public void insertClient() throws SQLException, ClassNotFoundException {
+    public void insertClient() throws SQLException, ClassNotFoundException, IOException {
         try {
             BackgroundFill backgroundFill = new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY);
             Background background = new Background(backgroundFill);
@@ -241,7 +241,7 @@ public class ClientsController {
                     idVenText.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
                 }
             }
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             resultLabel.setText("Insertion du client impossible");
             resultLabel.setTextFill(Paint.valueOf("red"));
             throw e;
