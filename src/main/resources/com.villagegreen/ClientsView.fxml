@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.geometry.Insets?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.villagegreen.Controller.ClientsController">
+   <children>
+       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="565.0" prefWidth="1047.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+           <children>
+               <VBox layoutX="666.0" layoutY="11.0" prefHeight="467.0" prefWidth="320.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="11.0">
+                   <children>
+                       <Label text="Nom">
+                           <font>
+                               <Font name="MS Outlook" size="18.0" />
+                           </font>
+                           <VBox.margin>
+                               <Insets />
+                           </VBox.margin>
+                       </Label>
+                       <TextField fx:id="nomCliText" prefHeight="36.0" prefWidth="293.0" promptText="Nom du client...">
+                           <VBox.margin>
+                               <Insets />
+                           </VBox.margin>
+                  </TextField>
+                       <Label text="Prénom">
+                           <font>
+                               <Font name="MS Outlook" size="18.0" />
+                           </font>
+                           <VBox.margin>
+                               <Insets top="10.0" />
+                           </VBox.margin>
+                       </Label>
+                       <TextField fx:id="prenomCliText" prefHeight="36.0" promptText="Prénom du client...">
+                           <VBox.margin>
+                               <Insets />
+                           </VBox.margin>
+                  </TextField>
+                       <Label text="Adresse">
+                           <font>
+                               <Font name="MS Outlook" size="18.0" />
+                           </font>
+                           <VBox.margin>
+                               <Insets top="10.0" />
+                           </VBox.margin>
+                       </Label>
+                       <TextField fx:id="adresseCliText" prefHeight="36.0" promptText="Adresse du client...">
+                           <VBox.margin>
+                               <Insets />
+                           </VBox.margin>
+                  </TextField>
+                       <Label text="Email">
+                           <VBox.margin>
+                               <Insets top="10.0" />
+                           </VBox.margin>
+                           <font>
+                               <Font name="MS Outlook" size="18.0" />
+                           </font>
+                  </Label>
+                       <TextField fx:id="mailCliText" prefHeight="36.0" promptText="Email du client...">
+                           <VBox.margin>
+                               <Insets />
+                           </VBox.margin>
+                  </TextField>
+                       <Label text="Téléphone">
+                           <VBox.margin>
+                               <Insets top="10.0" />
+                           </VBox.margin>
+                           <font>
+                               <Font name="MS Outlook" size="18.0" />
+                           </font>
+                  </Label>
+                       <TextField fx:id="telCliText" prefHeight="36.0" promptText="Téléphone du client...">
+                           <VBox.margin>
+                               <Insets />
+                           </VBox.margin>
+                  </TextField>
+                       <Label text="ID client">
+                           <VBox.margin>
+                               <Insets top="10.0" />
+                           </VBox.margin>
+                           <font>
+                               <Font name="MS Outlook" size="18.0" />
+                           </font>
+                  </Label>
+                       <TextField fx:id="idCliText" prefHeight="36.0" promptText="ID du client...">
+                           <VBox.margin>
+                               <Insets />
+                           </VBox.margin>
+                  </TextField>
+                       <Label text="ID commercial">
+                           <VBox.margin>
+                               <Insets top="10.0" />
+                           </VBox.margin>
+                           <font>
+                               <Font name="MS Outlook" size="18.0" />
+                           </font>
+                  </Label>
+                       <TextField fx:id="idVenText" prefHeight="36.0" promptText="ID du commercial...">
+                           <VBox.margin>
+                               <Insets />
+                           </VBox.margin>
+                  </TextField>
+                   </children>
+               </VBox>
+               <TableView fx:id="clientTable" layoutX="95.0" layoutY="111.0" prefHeight="465.0" prefWidth="672.0" AnchorPane.bottomAnchor="95.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="367.0" AnchorPane.topAnchor="5.0">
+                   <columns>
+                       <TableColumn fx:id="cliNomColumn" prefWidth="92.0" text="Nom" />
+                       <TableColumn fx:id="cliPrenomColumn" prefWidth="92.0" text="Prénom" />
+                       <TableColumn fx:id="cliAdresseColumn" prefWidth="92.0" text="Adresse" />
+                       <TableColumn fx:id="cliMailColumn" prefWidth="92.0" text="Email" />
+                       <TableColumn fx:id="cliTelColumn" prefWidth="92.0" text="Téléphone" />
+                       <TableColumn fx:id="cliIdColumn" prefWidth="92.0" text="ID client" />
+                       <TableColumn fx:id="venIdColumn" prefWidth="72.0" text="ID commercial" />
+                   </columns>
+                   <columnResizePolicy>
+                       <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                   </columnResizePolicy>
+               </TableView>
+               <Button fx:id="AllClients" layoutX="14.0" layoutY="499.0" mnemonicParsing="false" onAction="#searchClients" prefHeight="40.0" text="Afficher tous les clients" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="11.0">
+                   <font>
+                       <Font name="MS Outlook" size="16.0" />
+                   </font>
+               </Button>
+               <Button fx:id="detailsBtn" disable="true" layoutX="610.0" layoutY="470.0" mnemonicParsing="false" prefHeight="40.0" text="Details" AnchorPane.bottomAnchor="55.0" AnchorPane.rightAnchor="367.0">
+                   <font>
+                       <Font name="MS Outlook" size="16.0" />
+                   </font>
+               </Button>
+               <Button fx:id="updateCliBtn" disable="true" layoutX="716.0" layoutY="511.0" mnemonicParsing="false" onAction="#updateNomClient" prefHeight="40.0" text="Modifier" AnchorPane.rightAnchor="252.0" AnchorPane.topAnchor="512.0">
+                   <font>
+                       <Font name="MS Outlook" size="16.0" />
+                   </font>
+               </Button>
+               <Button fx:id="deleteBtn" disable="true" layoutX="835.0" layoutY="512.0" mnemonicParsing="false" prefHeight="39.0" text="Supprimer" AnchorPane.rightAnchor="117.0" AnchorPane.topAnchor="512.0">
+                   <font>
+                       <Font name="MS Outlook" size="16.0" />
+                   </font>
+               </Button>
+               <Button fx:id="showCommande" disable="true" layoutX="216.0" layoutY="511.0" mnemonicParsing="false" prefHeight="40.0" text="Afficher les commandes" AnchorPane.bottomAnchor="20.0">
+                   <font>
+                       <Font name="MS Outlook" size="16.0" />
+                   </font>
+               </Button>
+               <Button fx:id="insertBtn" layoutX="962.0" layoutY="512.0" mnemonicParsing="false" onAction="#insertClient" prefHeight="40.0" text="Ajouter" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="512.0">
+                   <font>
+                       <Font name="MS Outlook" size="16.0" />
+                   </font>
+               </Button>
+            <Label fx:id="resultLabel" layoutX="415.0" layoutY="511.0" AnchorPane.bottomAnchor="20.0">
+               <font>
+                  <Font size="18.0" />
+               </font></Label>
+            <Button fx:id="clearBtn" disable="true" layoutX="713.0" layoutY="478.0" mnemonicParsing="false" onAction="#clear" text="Effacer formulaire" AnchorPane.rightAnchor="224.0" AnchorPane.topAnchor="478.0" />
+           </children>
+       </AnchorPane>
+   </children>
+
+</AnchorPane>

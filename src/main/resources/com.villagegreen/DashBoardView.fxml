@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.media.*?>
+<?import javafx.scene.web.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.villagegreen.Controller.DashBoardController">
+   <children>
+   
+       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="572.0" prefWidth="1021.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TableView fx:id="viewTable" layoutX="442.0" layoutY="70.0" prefHeight="490.0" prefWidth="559.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="442.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="70.0">
+              <columns>
+                <TableColumn fx:id="c1" prefWidth="75.0" text="C1" />
+                <TableColumn fx:id="c2" prefWidth="75.0" text="C2" />
+                  <TableColumn fx:id="c3" prefWidth="75.0" text="C2" />
+                  <TableColumn fx:id="c4" prefWidth="75.0" text="C2" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <Label fx:id="dashBoardLabel" layoutX="437.0" layoutY="23.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <VBox prefHeight="554.0" prefWidth="420.0" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="601.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Hyperlink fx:id="link1" alignment="TOP_CENTER" contentDisplay="TOP" prefHeight="38.0" prefWidth="425.0" text="Chiffre d'Affaire Mensuel">
+                     <font>
+                        <Font name="MS Outlook" size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </Hyperlink>
+                  <Hyperlink fx:id="link2" alignment="TOP_CENTER" prefHeight="38.0" prefWidth="448.0" text="TOP 10 Produits Les + Commandés">
+                     <font>
+                        <Font name="MS Outlook" size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </Hyperlink>
+                  <Hyperlink fx:id="link3" alignment="TOP_CENTER" prefHeight="35.0" prefWidth="422.0" text="TOP 10 Produits Les + Rentables">
+                     <font>
+                        <Font name="MS Outlook" size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </Hyperlink>
+                  <Hyperlink fx:id="link4" alignment="TOP_CENTER" prefHeight="38.0" prefWidth="440.0" text="TOP 10 Chiffre d'Affaire Par Client">
+                     <font>
+                        <Font name="MS Outlook" size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </Hyperlink>
+                  <Hyperlink fx:id="link5" alignment="TOP_CENTER" prefHeight="38.0" prefWidth="430.0" text="TOP 10 Clients Qui Commandent Le +">
+                     <font>
+                        <Font name="MS Outlook" size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </Hyperlink>
+                  <Hyperlink fx:id="link6" alignment="TOP_CENTER" prefHeight="38.0" prefWidth="430.0" text="Chiffre d'Affaire Par Type De Client">
+                     <font>
+                        <Font name="MS Outlook" size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </Hyperlink>
+                  <Hyperlink fx:id="link7" alignment="TOP_CENTER" prefHeight="38.0" prefWidth="433.0" text="Chiffre d'Affaire Par Fournisseur">
+                     <font>
+                        <Font name="MS Outlook" size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </Hyperlink>
+                  <Hyperlink fx:id="link8" alignment="TOP_CENTER" prefHeight="38.0" prefWidth="466.0" text="Produits Triés Par Catégories">
+                     <font>
+                        <Font name="MS Outlook" size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </Hyperlink>
+                  <Hyperlink fx:id="link9" alignment="TOP_CENTER" prefHeight="38.0" prefWidth="433.0" text="Produits Triés Par Fournisseur">
+                     <font>
+                        <Font name="MS Outlook" size="24.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
+                     <effect>
+                        <Lighting>
+                           <bumpInput>
+                              <Shadow />
+                           </bumpInput>
+                           <light>
+                              <Light.Distant />
+                           </light>
+                        </Lighting>
+                     </effect>
+                  </Hyperlink>
+               </children>
+               <padding>
+                  <Insets top="30.0" />
+               </padding>
+            </VBox>
+            <Label layoutX="437.0" layoutY="20.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+
+</AnchorPane>
