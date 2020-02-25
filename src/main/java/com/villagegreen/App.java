@@ -1,32 +1,13 @@
 package com.villagegreen;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
-import com.villagegreen.Modele.Client;
-import com.villagegreen.Modele.Client2;
-import com.villagegreen.Modele.Produit;
-import com.villagegreen.Util.DBConnector;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.XYChart;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
 import java.sql.*;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class App extends Application {
 

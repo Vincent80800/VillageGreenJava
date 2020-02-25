@@ -11,6 +11,7 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
 
@@ -39,12 +40,12 @@ public class CommandeController{
 
 
     @FXML
-    public void searchCommandeByClient(Client cli) throws SQLException, ClassNotFoundException {
+    public void searchCommandeByClient(Client cli) throws SQLException, ClassNotFoundException, IOException {
         try {
             ObservableList<Commande> com = CommandeDAO.searchCommandeByCli(cli.getId_client());
             populateAndShowCommande(com);
             labelCommande.setText("Commandes de Monsieur/Madame " + cli.getPrenom_client() + " " + cli.getNom_client());
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             System.out.println("Error" + e);
             throw e;
         }
@@ -87,12 +88,12 @@ public class CommandeController{
     }
 
     @FXML
-    private void searchCommandes() throws ClassNotFoundException, SQLException {
+    private void searchCommandes() throws ClassNotFoundException, SQLException, IOException {
         try {
-            ObservableList<Commande> commData = CommandeDAO.searchCommandes();
+            ObservableList<Commande> commData = CommandeDAO.getAllCommande();
             populateCommande(commData);
             labelCommande.setText("Toutes les commandes ");
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             System.out.println("Error " + e);
             throw e;
         }

@@ -7,24 +7,24 @@ import javafx.stage.Stage;
 import java.util.Date;
 
 public class Commande extends Client {
-    private IntegerProperty id_commande;
-    private DoubleProperty prix_total;
-    private SimpleObjectProperty<Date> date_commande;
-    private StringProperty statut_commande;
-    private StringProperty adresse_facture;
-    private StringProperty codePostal_facture;
-    private StringProperty ville_facture;
+    private IntegerProperty com_id;
+    private DoubleProperty com_tot;
+    private SimpleObjectProperty<Date> com_dat;
+    private StringProperty com_eta;
+    private StringProperty fac_adr;
+    private StringProperty fac_cp;
+    private StringProperty fac_vil;
     private StringProperty nom_client;
     private StringProperty prenom_client;
 
     public Commande() {
-        this.id_commande = new SimpleIntegerProperty();
-        this.prix_total = new SimpleDoubleProperty();
-        this.date_commande = new SimpleObjectProperty<>();
-        this.statut_commande = new SimpleStringProperty();
-        this.adresse_facture = new SimpleStringProperty();
-        this.codePostal_facture = new SimpleStringProperty();
-        this.ville_facture = new SimpleStringProperty();
+        this.com_id = new SimpleIntegerProperty();
+        this.com_tot = new SimpleDoubleProperty();
+        this.com_dat = new SimpleObjectProperty<>();
+        this.com_eta = new SimpleStringProperty();
+        this.fac_adr = new SimpleStringProperty();
+        this.fac_cp = new SimpleStringProperty();
+        this.fac_vil = new SimpleStringProperty();
         this.nom_client = new SimpleStringProperty();
         this.prenom_client = new SimpleStringProperty();
     }
@@ -50,65 +50,65 @@ public class Commande extends Client {
     }
 
     public int getId_commande() {
-        return id_commande.get();
+        return com_id.get();
     }
     public IntegerProperty id_commandeProperty() {
-        return id_commande;
+        return com_id;
     }
     public void setId_commande(int id_commande) {
-        this.id_commande.set(id_commande);
+        this.com_id.set(id_commande);
     }
 
     public double getPrix_total() {
-        return prix_total.get();
+        return com_tot.get();
     }
     public DoubleProperty prix_totalProperty() {
-        return prix_total;
+        return com_tot;
     }
-    public void setPrix_total(double prix_total) { this.prix_total.set(prix_total); }
+    public void setPrix_total(double prix_total) { this.com_tot.set(prix_total); }
 
-    public Date getDate_commande() { return date_commande.get(); }
-    public SimpleObjectProperty<Date> date_commandeProperty() { return date_commande; }
-    public void setDate_commande(Date date_commande) { this.date_commande.set(date_commande); }
+    public Date getDate_commande() { return com_dat.get(); }
+    public SimpleObjectProperty<Date> date_commandeProperty() { return com_dat; }
+    public void setDate_commande(Date date_commande) { this.com_dat.set(date_commande); }
 
     public String getStatut_commande() {
-        return statut_commande.get();
+        return com_eta.get();
     }
     public StringProperty statut_commandeProperty() {
-        return statut_commande;
+        return com_eta;
     }
     public void setStatut_commande(String statut_commande) {
-        this.statut_commande.set(statut_commande);
+        this.com_eta.set(statut_commande);
     }
 
     public String getAdresse_facture() {
-        return adresse_facture.get();
+        return fac_adr.get();
     }
     public StringProperty adresse_factureProperty() {
-        return adresse_facture;
+        return fac_adr;
     }
     public void setAdresse_facture(String adresse_facture) {
-        this.adresse_facture.set(adresse_facture);
+        this.fac_adr.set(adresse_facture);
     }
 
     public String getCodePostal_facture() {
-        return codePostal_facture.get();
+        return fac_cp.get();
     }
     public StringProperty codePostal_factureProperty() {
-        return codePostal_facture;
+        return fac_cp;
     }
     public void setCodePostal_facture(String codePostal_facture) {
-        this.codePostal_facture.set(codePostal_facture);
+        this.fac_cp.set(codePostal_facture);
     }
 
     public String getVille_facture() {
-        return ville_facture.get();
+        return fac_vil.get();
     }
     public StringProperty ville_factureProperty() {
-        return ville_facture;
+        return fac_vil;
     }
     public void setVille_facture(String ville_facture) {
-        this.ville_facture.set(ville_facture);
+        this.fac_vil.set(ville_facture);
     }
 
 }
