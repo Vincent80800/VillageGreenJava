@@ -194,7 +194,16 @@ public class ClientsController {
     @FXML
     public void updateNomClient(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException {
         try {
-            //ClientDAO.updateCliById(nomCliText.getText(), prenomCliText.getText(), adresseCliText.getText(), mailCliText.getText(), telCliText.getText(), idCliText.getText(), idVenText.getText());
+            Client client = new Client();
+            client.setId_client(Integer.valueOf(idCliText.getText()));
+            client.setNom_client(nomCliText.getText());
+            client.setPrenom_client(prenomCliText.getText());
+            client.setAdresse_client(adresseCliText.getText());
+            client.setMail_client(mailCliText.getText());
+            client.setTel_client(telCliText.getText());
+            client.setId_vendeur(Integer.parseInt(idVenText.getText()));
+
+            ClientDAO.updateCliById(client);
             resultLabel.setText("Le profil de " + prenomCliText.getText() + " " + nomCliText.getText() + " a été modifié!");
             resultLabel.setTextFill(Paint.valueOf("green"));
             searchClients();

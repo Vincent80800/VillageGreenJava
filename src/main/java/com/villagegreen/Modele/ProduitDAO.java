@@ -1,42 +1,54 @@
 package com.villagegreen.Modele;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.villagegreen.Util.DBConnector;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.stage.Stage;
+import org.hildan.fxgson.FxGson;
 
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ProduitDAO{
 
-    public static ObservableList<Produit> searchProduits() throws SQLException, ClassNotFoundException {
-        String selectStmt = "SELECT * FROM prod;";
+    public static ObservableList<Produit> searchProduits() throws IOException, SQLException {
+        ArrayList<Produit> resultat = new ArrayList<>();
         try {
-            ResultSet rsProds = DBConnector.dbExecuteQuery(selectStmt);
-            return getProduitsList(rsProds);
-        } catch (SQLException e) {
-            System.out.println("SQL select operation failed!  " + e);
-            throw e;
+            String sURL = "https://dev.amorce.org/vboulard/VillageGreen/index.php/Api/getAllProd/";
+
+            URL api = new URL(sURL);
+            URLConnection request = api.openConnection();
+            request.connect();
+
+            Gson gg = FxGson.coreBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+            JsonParser jp = null;
+            JsonArray root = (JsonArray) jp.parseReader(new InputStreamReader((InputStream) request.getContent()));
+            Produit[] liste = gg.fromJson(root, Produit[].class);
+
+            resultat.addAll(Arrays.asList(liste));
         }
+        catch (Exception er) {
+            System.out.println("Un problème est survenue");
+            System.out.println(er.getMessage());
+            throw er;
+        }
+        return getProduitsList(resultat);
     }
 
-    public static ObservableList<Produit> getProduitsList(ResultSet rs) throws SQLException {
-        ObservableList<Produit> prodList = FXCollections.observableArrayList();
-        while (rs.next()) {
-            Produit prod = new Produit();
 
-            prod.setReference_produit(rs.getString("pro_ref"));
-            prod.setLibelle_produit(rs.getString("pro_lib"));
-            prod.setDescription_produit(rs.getString("pro_des"));
-            prod.setId_produit(rs.getInt("pro_id"));
-            prod.setPrixV_produit(rs.getDouble("pro_priV"));
-            prod.setPrixA_produit(rs.getDouble("pro_priA"));
-            prod.setId_rubrique(rs.getInt("ru2_id"));
-
-            prodList.add(prod);
-        }
+    public static ObservableList<Produit> getProduitsList(ArrayList arrayList) throws SQLException, IOException {
+        ObservableList<Produit> prodList = FXCollections.observableArrayList(arrayList);
         return prodList;
     }
 
@@ -66,47 +78,105 @@ public class ProduitDAO{
         return prod;
     }
 
-    public static void deleteProdWithId(int IDprod) throws SQLException, ClassNotFoundException {
-        String updateStmt = "DELETE FROM prod\n" + "WHERE pro_id="+ IDprod + ";";
-
+    public static void deleteProdWithId(int id) throws IOException, SQLException {
+        ArrayList<Produit> resultat = new ArrayList<>();
         try {
-            DBConnector.dbExecuteUpdate(updateStmt);
-        }catch (SQLException e) {
-            System.out.println("Error while DELETE" + e);
-            throw e;
+            String sURL = "https://dev.amorce.org/vboulard/VillageGreen/index.php/Api/deleteProById/" + id;
+
+            URL api = new URL(sURL);
+            URLConnection request = api.openConnection();
+            request.connect();
+
+            Gson gg = FxGson.coreBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+            JsonParser jp = null;
+            JsonArray root = (JsonArray) jp.parseReader(new InputStreamReader((InputStream) request.getContent()));
+            Produit[] liste = gg.fromJson(root, Produit[].class);
+
+            resultat.addAll(Arrays.asList(liste));
+        }
+        catch (Exception er) {
+            System.out.println("Un problème est survenue");
+            System.out.println(er.getMessage());
+            throw er;
         }
     }
 
-    public static void updateNomProd(String refProd, String libProd, String desProd, String IdProd, String priVProd, String priAProd, String IdRub) throws SQLException, ClassNotFoundException {
-        String updateStmt = "UPDATE prod\n" +
-                "SET pro_ref = '" + refProd + "',\n" +
-                "pro_lib = '" + libProd + "',\n" +
-                "pro_des = '" + desProd + "',\n" +
-                "pro_id = '" + IdProd + "',\n" +
-                "pro_priV = '" + priVProd + "',\n" +
-                "pro_priA = '" + priAProd + "',\n" +
-                "ru2_id = '" + IdRub + "'\n" +
-                "WHERE pro_id = '" + IdProd + "';";
-        System.out.println(updateStmt);
+
+    public static void updateProById(Produit produit) throws IOException, SQLException {
+        ArrayList<Produit> resultat = new ArrayList<>();
         try {
-            DBConnector.dbExecuteUpdate(updateStmt);
-        } catch (SQLException e) {
-            System.out.println("Error while UPDATE" + e);
-            throw e;
+            String sURL = "https://dev.amorce.org/vboulard/VillageGreen/index.php/Api/updateProById/";
+
+            URL api = new URL(sURL);
+            HttpURLConnection request = (HttpURLConnection) api.openConnection();
+            request.setRequestMethod("POST");
+            request.setRequestProperty("Content-Type", "application/json; utf-8");
+            request.setRequestProperty("Accept", "application/json");
+            request.setDoOutput(true);
+
+
+            Gson gg = FxGson.coreBuilder().setPrettyPrinting().disableHtmlEscaping().setLenient().create();
+            JsonParser jp = new JsonParser();
+            String s = gg.toJson(produit);
+            try (OutputStream os = request.getOutputStream()) {
+                byte[] input = s.getBytes("utf-8");
+                os.write(input, 0, input.length);
+            }
+
+            // Reception des données
+            String response = "";
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(), "utf-8"))) {
+                String responseLine = null;
+                while ((responseLine = br.readLine()) != null) {
+                    response += responseLine.trim();
+                }
+            }
+
+            JsonObject reponse = jp.parse(response).getAsJsonObject();
+
+            System.out.println(reponse.get("message").getAsString());
+        } catch (Exception er) {
+
+            System.out.println("Un problème est survenue");
+            System.out.println(er.getMessage());
         }
     }
 
-    public static void insertProd(String refProd, String libProd, String desProd, String IdProd, String priVProd, String priAProd, String IdRub) throws SQLException, ClassNotFoundException {
-        String updateStmt = "INSERT INTO prod\n" +
-                "(pro_ref, pro_lib, pro_des, pro_id, pro_priV, pro_priA, ru2_id, fou_id, pro_aff)\n" +
-                "VALUES\n" +
-                "('"+refProd+"', '"+libProd+"', '"+desProd+"', '"+IdProd+"', '"+priVProd+"', '"+priAProd+"', '"+IdRub+"', 1, 1);";
-        System.out.println(updateStmt);
+    public static void insertPro(Produit produit) throws IOException, SQLException {
         try {
-            DBConnector.dbExecuteUpdate(updateStmt);
-        } catch (SQLException e) {
-            System.out.println("Error while INSERT! " + e);
-            throw e;
+            String sURL = "https://dev.amorce.org/vboulard/VillageGreen/index.php/Api/insertPro/";
+            URL api = new URL(sURL);
+            HttpURLConnection request = (HttpURLConnection)api.openConnection();
+            request.setRequestMethod("POST");
+            request.setRequestProperty("Content-Type", "application/json; utf-8");
+            request.setRequestProperty("Accept", "application/json");
+            request.setDoOutput(true);
+
+            Gson gg = FxGson.coreBuilder().setPrettyPrinting().disableHtmlEscaping().setLenient().create();
+            JsonParser jp = new JsonParser();
+
+            String s = gg.toJson(produit);
+            try(OutputStream os = request.getOutputStream()) {
+                byte[] input = s.getBytes("utf-8");
+                os.write(input, 0, input.length);
+            }
+
+            // Reception des données
+            String response = "";
+            try (BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream(), "utf-8"))) {
+                String responseLine = null;
+                while ((responseLine = br.readLine()) != null) {
+                    response += responseLine.trim();
+                }
+            }
+
+            JsonObject reponse = jp.parse(response).getAsJsonObject();
+
+            System.out.println(reponse.get("message").getAsString());
+        }
+        catch (Exception er) {
+            System.out.println("Un problème est survenue");
+            System.out.println(er.getMessage());
         }
     }
 }

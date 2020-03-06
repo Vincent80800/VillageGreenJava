@@ -116,7 +116,7 @@
                        <TableColumn fx:id="cliAdresseColumn" prefWidth="92.0" text="Adresse" />
                        <TableColumn fx:id="cliMailColumn" prefWidth="92.0" text="Email" />
                        <TableColumn fx:id="cliTelColumn" prefWidth="92.0" text="Téléphone" />
-                       <TableColumn fx:id="cliIdColumn" prefWidth="92.0" text="ID client" />
+                       <TableColumn fx:id="cliIdColumn" prefWidth="92.0" text="Référence client" />
                        <TableColumn fx:id="venIdColumn" prefWidth="72.0" text="ID commercial" />
                    </columns>
                    <columnResizePolicy>

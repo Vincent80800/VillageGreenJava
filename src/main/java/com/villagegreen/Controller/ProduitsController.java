@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Callback;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class ProduitsController {
@@ -49,12 +50,12 @@ public class ProduitsController {
     @FXML
     private Label resultLabel;
     @FXML
-    private Button deleteBtnP;
+    private Button deleteBtnP, updateCliBtn, insertBtn, clearBtn;
 
     private final ContextMenu contextMenu = new ContextMenu();
 
     @FXML
-    public void populateProduits(ObservableList<Produit> cliData) { produitTable.setItems(cliData); }
+    public void populateProduits(ObservableList<Produit> proData) { produitTable.setItems(proData); }
 
     @FXML
     private void populateProduit(Produit prod) {
@@ -91,11 +92,12 @@ public class ProduitsController {
     }
 
     @FXML
-    private void searchProduits() throws ClassNotFoundException, SQLException {
+    private void searchProduits() throws ClassNotFoundException, SQLException, IOException {
         try {
+            detailsBtn.setDisable(true);
             ObservableList<Produit> prodData = ProduitDAO.searchProduits();
             populateProduits(prodData);
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             System.out.println("Error " + e);
             throw e;
         }
@@ -115,6 +117,7 @@ public class ProduitsController {
         produitTable.setRowFactory(produitTableView -> {
             TableRow<Produit> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
+                detailsBtn.setDisable(false);
                 row.setOnContextMenuRequested(contextMenuEvent -> contextMenu.show(produitTable, contextMenuEvent.getScreenX(), contextMenuEvent.getScreenY()));
                 if (event.getClickCount() == 2 && (!row.isEmpty())) {
                     Produit cli = row.getItem();
@@ -124,13 +127,18 @@ public class ProduitsController {
             return row;
         });
         this.detailsBtn.setOnAction((e) -> {
+            updateCliBtn.setDisable(false);
+            deleteBtnP.setDisable(false);
+            insertBtn.setDisable(true);
+            clearBtn.setDisable(false);
                 prefillForUpdate(getSelectedRow());
         });
         this.deleteBtnP.setOnAction(actionEvent ->{
             try{
+                updateCliBtn.setDisable(false);
                 deleteProduit(getSelectedRow());
                 clear();
-            } catch (SQLException | ClassNotFoundException e) {
+            } catch (SQLException | ClassNotFoundException | IOException e) {
                 e.printStackTrace();
             }
         });
@@ -155,6 +163,9 @@ public class ProduitsController {
         this.prixVProdText.clear();
         this.prixAProdText.clear();
         this.idRubText.clear();
+        insertBtn.setDisable(false);
+        updateCliBtn.setDisable(true);
+        deleteBtnP.setDisable(true);
     }
 
     private Produit getSelectedRow() {
@@ -175,13 +186,15 @@ public class ProduitsController {
     }
 
     @FXML
-    public void deleteProduit(Produit produit) throws SQLException, ClassNotFoundException, NullPointerException {
+    public void deleteProduit(Produit produit) throws SQLException, ClassNotFoundException, NullPointerException, IOException {
         try {
             ProduitDAO.deleteProdWithId(produit.getId_produit());
             resultLabel.setText("Le produit " + libProdText.getText() + " a été supprimé!");
             resultLabel.setStyle("-fx-border-color: green ; -fx-border-width: 2px ;");
             searchProduits();
-        } catch (SQLException | NullPointerException e) {
+            deleteBtnP.setDisable(true);
+            updateCliBtn.setDisable(true);
+        } catch (SQLException | NullPointerException | IOException e) {
             resultLabel.setText("Problem");
             resultLabel.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
             throw e;
@@ -189,14 +202,22 @@ public class ProduitsController {
     }
 
     @FXML
-    public void updateNomProduit(ActionEvent actionEvent) throws SQLException, ClassNotFoundException {
+    public void updateNomProduit(ActionEvent actionEvent) throws SQLException, ClassNotFoundException, IOException {
         try {
-            ProduitDAO.updateNomProd(refProdText.getText(), libProdText.getText(), desProdText.getText(), idProdText.getText(), prixVProdText.getText(), prixAProdText.getText(), idRubText.getText());
+            Produit produit = new Produit();
+            produit.setId_produit(Integer.valueOf(idProdText.getText()));
+            produit.setReference_produit(refProdText.getText());
+            produit.setLibelle_produit(libProdText.getText());
+            produit.setDescription_produit(desProdText.getText());
+            produit.setPrixV_produit(Double.parseDouble(prixVProdText.getText()));
+            produit.setPrixA_produit(Double.parseDouble(prixAProdText.getText()));
+            produit.setId_rubrique(Integer.parseInt(idRubText.getText()));
+            ProduitDAO.updateProById(produit);
             resultLabel.setText("Le produit " + libProdText.getText() + " a été modifié!");
             resultLabel.setStyle("-fx-border-color: green ; -fx-border-width: 2px ;");
             searchProduits();
             clear();
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             resultLabel.setText("Problem");
             resultLabel.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
             throw e;
@@ -204,12 +225,19 @@ public class ProduitsController {
     }
 
     @FXML
-    public void insertProduit() throws SQLException, ClassNotFoundException {
+    public void insertProduit() throws SQLException, ClassNotFoundException, IOException {
         try {
             BackgroundFill backgroundFill = new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY);
             Background background = new Background(backgroundFill);
+            Produit produit = new Produit();
+            produit.setReference_produit(libProdText.getText());
+            produit.setLibelle_produit(libProdText.getText());
+            produit.setDescription_produit(desProdText.getText());
+            produit.setPrixV_produit(Double.parseDouble(prixVProdText.getText()));
+            produit.setPrixA_produit(Double.parseDouble(prixAProdText.getText()));
+            produit.setId_rubrique(Integer.parseInt(idRubText.getText()));
             if (!refProdText.getText().isEmpty() && !libProdText.getText().isEmpty() && !desProdText.getText().isEmpty() && !idProdText.getText().isEmpty() && !prixVProdText.getText().isEmpty() && !prixAProdText.getText().isEmpty() && !idRubText.getText().isEmpty()) {
-                ProduitDAO.insertProd(refProdText.getText(), libProdText.getText(), desProdText.getText(), idProdText.getText(), prixVProdText.getText(), prixAProdText.getText(), idRubText.getText());
+                ProduitDAO.insertPro(produit);
                 resultLabel.setText("Le produit " + libProdText.getText() + " a été ajouté");
                 resultLabel.setStyle("-fx-border-color: green ; -fx-border-width: 2px ;");
                 searchProduits();
@@ -238,7 +266,7 @@ public class ProduitsController {
                     idRubText.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
                 }
             }
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
             resultLabel.setText("Problem");
             resultLabel.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
             throw e;

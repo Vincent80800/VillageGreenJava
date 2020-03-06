@@ -115,7 +115,7 @@
                        <TableColumn fx:id="refProdColumn" prefWidth="92.0" text="Référence" />
                        <TableColumn fx:id="libProdColumn" prefWidth="92.0" text="Libellé" />
                        <TableColumn fx:id="desProdColumn" prefWidth="92.0" text="Description" />
-                       <TableColumn fx:id="idProdColumn" prefWidth="92.0" text="ID Produit" />
+                       <TableColumn fx:id="idProdColumn" prefWidth="92.0" text="Référence Produit" />
                        <TableColumn fx:id="prixVProdColumn" prefWidth="92.0" text="Prix de Vente" />
                        <TableColumn fx:id="prixAProdColumn" prefWidth="92.0" text="Prix d'Achat" />
                        <TableColumn fx:id="idRubColumn" prefWidth="92.0" text="ID Rubrique" />
@@ -134,7 +134,7 @@
                        <Font name="MS Outlook" size="16.0" />
                    </font>
                </Button>
-               <Button layoutX="716.0" layoutY="511.0" mnemonicParsing="false" onAction="#updateNomProduit" prefHeight="40.0" text="Modifier" AnchorPane.topAnchor="512.0" AnchorPane.rightAnchor="255.0">
+               <Button layoutX="716.0" layoutY="511.0" fx:id="updateCliBtn" disable="true" mnemonicParsing="false" onAction="#updateNomProduit" prefHeight="40.0" text="Modifier" AnchorPane.topAnchor="512.0" AnchorPane.rightAnchor="255.0">
                    <font>
                        <Font name="MS Outlook" size="16.0" />
                    </font>
@@ -144,7 +144,7 @@
                        <Font name="MS Outlook" size="16.0" />
                    </font>
                </Button>
-               <Button layoutX="962.0" layoutY="512.0" mnemonicParsing="false" onAction="#insertProduit" prefHeight="40.0" text="Ajouter" AnchorPane.topAnchor="512.0" AnchorPane.rightAnchor="14.0">
+               <Button fx:id="insertBtn" layoutX="962.0" layoutY="512.0" mnemonicParsing="false" onAction="#insertProduit" prefHeight="40.0" text="Ajouter" AnchorPane.topAnchor="512.0" AnchorPane.rightAnchor="14.0">
                    <font>
                        <Font name="MS Outlook" size="16.0" />
                    </font>
@@ -152,7 +152,7 @@
             <Button fx:id="searchProdBtn" layoutX="400.0" layoutY="511.0" mnemonicParsing="false" onAction="#searchProduit" AnchorPane.bottomAnchor="20.0" prefHeight="40.0" text="Chercher" />
             <TextField fx:id="nomCliText" layoutX="250.0" layoutY="511.0" prefHeight="40.0" AnchorPane.bottomAnchor="20.0" promptText="chercher" />
             <Label fx:id="resultLabel" layoutX="483.0" layoutY="525.0" />
-               <Button layoutX="713.0" layoutY="478.0" mnemonicParsing="false" onAction="#clear" text="Effacer formulaire" AnchorPane.rightAnchor="224.0" AnchorPane.topAnchor="478.0" />
+               <Button fx:id="clearBtn" layoutX="713.0" disable="true" layoutY="478.0" mnemonicParsing="false" onAction="#clear" text="Effacer formulaire" AnchorPane.rightAnchor="224.0" AnchorPane.topAnchor="478.0" />
            </children>
        </AnchorPane>
    </children>
